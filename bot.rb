@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'cinch'
 require 'active_record'
 require './topic'
