@@ -62,7 +62,7 @@ Cinch::Bot.new do
 
   on(:message, /^!delete ([\d])$/) do |m, id|
     topic = Topic.find(id)
-    if topic.author == m.user.nick
+    if topic.author == m.user.nick || m.user.nick == "dpg"
       Topic.destroy(id)
       m.reply "Successfully destroyed #{topic.id}, by #{topic.author}"
     end
