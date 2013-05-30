@@ -5,7 +5,8 @@ require './topic'
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'postgresql',
-  :database => ENV["DATABASE_URL"]
+  :database => 'techendo-bot'
+  :host => ENV["DATABASE_URL"]
 )
 
 puts "creating topics table"
