@@ -4,7 +4,7 @@ require 'active_record'
 require './topic'
 
 ActiveRecord::Base.establish_connection(
-  :adapter => 'pg',
+  :adapter => 'postgresql',
   :database => ENV["DATABASE_URL"]
 )
 
