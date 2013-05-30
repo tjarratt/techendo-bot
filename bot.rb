@@ -42,16 +42,14 @@ Cinch::Bot.new do
   end
 
   on(:message, 'you there, techendo-pal?') do |m|
-    m.reply "Yes. I believe so."
+    m.reply "Yes. I believe so, #{m.user.name}. I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines."
   end
 
-  on(:message, /^!topic (.+?) (.+)/) do |m, nick, message|
-    puts nick
-    puts message
+  on(:message, /^!topic (.+?)/) do |m, message|
     unless Topic.create(:description => message, :author => nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
     else 
-      m.reply "Recorded topic: #{message}, by author: #{nick} at #{Time.now}"
+      m.reply "Recorded topic: #{message}, by author: #{m.user.nick} at #{Time.now}"
     end
   end
 
@@ -61,5 +59,15 @@ Cinch::Bot.new do
       m.reply "#{t.id} : #{t.description} (submitted by #{t.author})"
     end
   end
+
+  on(:message, '!delete ([\d])') do |m, id|
+    topic = Topic.find(id)
+    if topic.author == m.user.nick
+      Topic.destroy(id)
+      m.reply "Successfully destroyed #{topic.id}, by #{topic.author}"
+    end
+  end
+
+
 
 end.start
