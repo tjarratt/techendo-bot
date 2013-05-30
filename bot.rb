@@ -35,7 +35,7 @@ Cinch::Bot.new do
     m.reply "Hi, everyone. How's it going?"
   end
 
-  on(:message, 'you there, techendo-pal?') do |m, nick, message|
+  on(:message, 'you there, techendo-pal?') do |m|
     m.reply "Yes. I believe so."
   end
 
