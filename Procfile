@@ -1,1 +1,1 @@
-web: bundle exec ruby bot.rb
+cinch: bundle exec ./bot.rb
