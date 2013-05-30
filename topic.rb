@@ -1,3 +1,3 @@
-class Topic < Activerecord::Base
+class Topic < ActiveRecord::Base
 end
 
