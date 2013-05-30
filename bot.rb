@@ -4,8 +4,8 @@ require 'active_record'
 require './topic'
 
 ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3',
-  :database => 'topics.db'
+  :adapter => 'PostgreSQL',
+  :database => ENV["DATABASE_URL"]
 )
 
 puts "creating topics table"
