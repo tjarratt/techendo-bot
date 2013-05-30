@@ -3,12 +3,24 @@ require 'cinch'
 require 'active_record'
 require './topic'
 
+db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+
+ActiveRecord::Base.establish_connection(
+  :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
+  :host     => db.host,
+  :port     => db.port,
+  :username => db.user,
+  :password => db.password,
+  :database => db.path[1..-1],
+  :encoding => 'utf8'
+)
+'''
 ActiveRecord::Base.establish_connection(
   :adapter => 'postgresql',
   :database => 'techendo-bot',
   :host => ENV["DATABASE_URL"]
 )
-
+'''
 puts "creating topics table"
 
 begin
