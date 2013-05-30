@@ -14,13 +14,7 @@ ActiveRecord::Base.establish_connection(
   :database => db.path[1..-1],
   :encoding => 'utf8'
 )
-'''
-ActiveRecord::Base.establish_connection(
-  :adapter => 'postgresql',
-  :database => 'techendo-bot',
-  :host => ENV["DATABASE_URL"]
-)
-'''
+
 puts "creating topics table"
 
 begin
