@@ -1,5 +1,20 @@
 require 'cinch'
 require 'topic'
+require 'active_record'
+
+ActiveRecord::Base.establish_connection(
+  :adapter => 'sqlite3',
+  :database => ':memory:'
+)
+
+ActiveRecord::Schema.define do
+  create_table :topics do |table|
+    table.column :id, :integer
+    table.column :created_at, :datetime, :null => false, :default => Time.now
+    table.column :author, :string
+    table.column :description, :string
+  end
+end
 
 Cinch::Bot.new do
   configure do |c|
