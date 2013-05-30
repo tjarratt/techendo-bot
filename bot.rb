@@ -30,13 +30,6 @@ rescue Exception
   puts "No worries. Database already created."
 end
 
-unless Topic.create(:description => "hi", :author => "hi")
-  puts "Sorry, that didn't work. There must be something wrong with me today."
-else 
-  puts "Recorded."
-end
-
-
 Cinch::Bot.new do
   configure do |c|
     c.server = 'irc.freenode.org'
