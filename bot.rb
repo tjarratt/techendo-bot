@@ -46,7 +46,7 @@ Cinch::Bot.new do
   end
 
   on(:message, /^!topic (.+?)/) do |m, message|
-    unless Topic.create(:description => message, :author => nick)
+    unless Topic.create(:description => message, :author => m.user.nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
     else 
       m.reply "Recorded topic: #{message}, by author: #{m.user.nick} at #{Time.now}"
