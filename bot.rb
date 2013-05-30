@@ -45,7 +45,7 @@ Cinch::Bot.new do
     m.reply "Yes. I believe so, #{m.user.name}. I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines."
   end
 
-  on(:message, /^!topic (.+?)/) do |m, message|
+  on(:message, /^!topic (.+*)$/) do |m, message|
     unless Topic.create(:description => message, :author => m.user.nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
     else 
