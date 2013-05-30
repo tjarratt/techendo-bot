@@ -17,6 +17,13 @@ ActiveRecord::Schema.define do
   end
 end
 
+unless Topic.create(:description => "hi", :author => "hi")
+  puts "Sorry, that didn't work. There must be something wrong with me today."
+else 
+  puts "Recorded."
+end
+
+
 Cinch::Bot.new do
   configure do |c|
     c.server = 'irc.freenode.org'
@@ -32,18 +39,21 @@ Cinch::Bot.new do
     m.reply "Yes. I believe so."
   end
 
-   
-
-  on(:message, 'topic') do |m, nick, message|
-    Topic.create(
-      :description => message,
-      :author => nick,
-    )
+  on(:message, /^!topic (.+?) (.+)/) do |m, nick, message|
+    puts nick
+    puts message
+    unless Topic.create(:description => message, :author => nick)
+      m.reply "Sorry, that didn't work. There must be something wrong with me today."
+    else 
+      m.reply "Recorded topic: #{message}, by author: #{nick} at #{Time.now}"
+    end
   end
 
-  on(:message, 'topics') do |m|
-    Topic.all.each do |t|
+  on(:message, '!topics') do |m|
+    topics = Topic.find(:all)
+    topics.each do |t|
       m.reply "#{t.id} : #{t.description} (submitted by #{t.author})"
     end
   end
+
 end.start
