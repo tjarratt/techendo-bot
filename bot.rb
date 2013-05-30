@@ -4,17 +4,22 @@ require './topic'
 
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
-  :database => ':memory:'
+  :database => 'topics.db'
 )
 
 puts "creating topics table"
-ActiveRecord::Schema.define do
-  create_table :topics do |table|
-    table.column :id, :integer
-    table.column :created_at, :datetime, :null => false, :default => Time.now
-    table.column :author, :string
-    table.column :description, :string
+
+begin
+  ActiveRecord::Schema.define do
+    create_table :topics do |table|
+      table.column :id, :integer
+      table.column :created_at, :datetime, :null => false, :default => Time.now
+      table.column :author, :string
+      table.column :description, :string
+    end
   end
+rescue Exception
+  puts "No worries. Database already created."
 end
 
 unless Topic.create(:description => "hi", :author => "hi")
