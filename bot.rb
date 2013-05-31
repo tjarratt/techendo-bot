@@ -37,10 +37,6 @@ Cinch::Bot.new do
     c.nick = 'techendo-pal'
   end
 
-  on(:join) do |m|
-    m.reply "Hi, everyone. How's it going?"
-  end
-
   on(:message, 'you there, techendo-pal?') do |m|
     m.reply "Yes. I believe so, #{m.user.name}. I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines."
   end
