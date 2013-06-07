@@ -56,7 +56,7 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^!delete ([\d])$/) do |m, id|
+  on(:message, /^!delete ([\d+])$/) do |m, id|
     topic = Topic.find(id)
     if topic.author == m.user.nick || m.user.nick == "dpg"
       Topic.destroy(id)
