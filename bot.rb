@@ -3,6 +3,7 @@ require 'cinch'
 require 'active_record'
 require './topic'
 require './vote'
+require './tutorial'
 
 db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
