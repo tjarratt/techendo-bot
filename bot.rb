@@ -41,6 +41,15 @@ ActiveRecord::Schema.define do
       t.column :whom, :string
     end
   end
+
+  catches_exception do
+    create_table :tutorials do |table|
+      table.column :id, :integer
+      table.column :created_at, :datetime, :null => false, :default => Time.now
+      table.column :author, :string
+      table.column :description, :string
+    end
+  end
 end
 
 Cinch::Bot.new do
@@ -69,11 +78,34 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^!delete (\d+)$/) do |m, id|
+  on(:message, /^!delete topic (\d+)$/) do |m, id|
     topic = Topic.find(id)
     if topic.author == m.user.nick || m.user.nick == "dpg"
       Topic.destroy(id)
       m.reply "Successfully destroyed #{topic.id}, by #{topic.author}"
+    end
+  end
+
+  on(:message, /^!tutorial (.+)$/) do |m, message|
+    unless Tutorial.create(:description => message, :author => m.user.nick)
+      m.reply "Sorry, that didn't work. There must be something wrong with me today."
+    else
+      m.reply "Recorded tutorial: #{message}, by author: #{m.user.nick} at #{Time.now}"
+    end
+  end
+
+  on(:message, '!tutorials') do |m|
+    tut = Tutorial.find(:all)
+    tut.each do |t|
+      m.reply "#{t.id} : #{t.description} (submitted by #{t.author})"
+    end
+  end
+
+  on(:message, /^!delete tutorial (\d+)$/) do |m, id|
+    tut = Tutorial.find(id)
+    if tut.author == m.user.nick || m.user.nick == "dpg"
+      Tutorial.destroy(id)
+      m.reply "Successfully destroyed tutorial: #{tut.id}, by #{tut.author}"
     end
   end
 
