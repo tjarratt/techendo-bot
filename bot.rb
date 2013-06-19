@@ -72,10 +72,18 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, '!topics') do |m|
+  on(:message, /^\!topics( --spam)?$/) do |m, spam_channel|
+    user = User(m.user.nick)
+
     topics = Topic.find(:all)
     topics.each do |t|
-      m.reply "#{t.id} : #{t.description} (submitted by #{t.author})"
+      message = "#{t.id} : #{t.description} (submitted by #{t.author})"
+
+      if spam_channel
+        m.reply message
+      else
+        user.send message
+      end
     end
   end
 
@@ -128,7 +136,9 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^!votes$/) do |m, message|
+  on(:message, /^!votes( --spam)?$/) do |m, should_spam|
+    user = User(m.user.nick)
+
     all_votes = Vote.find(:all).to_a.inject({}) do |acc, v|
       acc[v.topic_id] ||= 0
       acc[v.topic_id] += 1
@@ -136,7 +146,13 @@ Cinch::Bot.new do
     end
 
     all_votes.sort_by {|k, v| v }.reverse.each do |topic, votes|
-      m.reply "Topic (#{topic}) has #{votes} votes"
+      message = "Topic (#{topic}) has #{votes} votes"
+
+      if should_spam
+        m.reply message
+      else
+        user.send message
+      end
     end
   end
 end.start
