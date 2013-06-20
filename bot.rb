@@ -60,6 +60,18 @@ Cinch::Bot.new do
     c.nick = 'techendo-pal'
   end
 
+  on(:message, '!help') do |m|
+    m.user.send 'Hello, I am the techendo bot. You can interact with me via these commands:'
+    m.user.send '!topic (description of topic) : suggest a potential topic for techendo'
+    m.user.send '!topics (--spam) : I will whisper the list of topics to you. Use --spam to spam the channel instead'
+    m.user.send '!delete (topic_id) : delete a topic'
+    m.user.send '!tutorial (description of tutorial) : suggest a potential tutorial for techendo'
+    m.user.send '!tutorials (--spam) : I will whisper the list of tutorials to you. Use --spam to spam the channel instead'
+    m.user.send '!delete tutorial (id) : delete a tutorial'
+    m.user.send '!vote (topic_id) : vote on a topic'
+    m.user.send '!votes (--spam) : I will whisper the list of votes to you. Use --spam to spam the channel instead'
+  end
+
   on(:message, 'you there, techendo-pal?') do |m|
     m.reply "Yes. I believe so, #{m.user.name}. I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines."
   end
