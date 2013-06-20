@@ -107,10 +107,15 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, '!tutorials') do |m|
-    tut = Tutorial.find(:all)
-    tut.each do |t|
-      m.reply "#{t.id} : #{t.description} (submitted by #{t.author})"
+  on(:message, /^\!tutorials( --spam)?$/) do |m, spam_channel|
+    Tutorial.find(:all).each do |t|
+      message = "#{t.id} : #{t.description} (submitted by #{t.author})"
+
+      if spam_channel
+        m.reply message
+      else
+        m.user.send message
+      end
     end
   end
 
