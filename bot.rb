@@ -1,57 +1,14 @@
 #!/usr/bin/env ruby
+require 'uri'
 require 'cinch'
 require 'active_record'
 require './topic'
 require './vote'
 require './tutorial'
+require './database'
 
-db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
-
-ActiveRecord::Base.establish_connection(
-  :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
-  :host     => db.host,
-  :port     => db.port,
-  :username => db.user,
-  :password => db.password,
-  :database => db.path[1..-1],
-  :encoding => 'utf8'
-)
-
-def catches_exception(&block)
-  begin
-    block.call
-  rescue ActiveRecord::StatementInvalid
-    puts "No worries, this migration has already been run"
-  end
-end
-
-puts "creating database"
-ActiveRecord::Schema.define do
-  catches_exception do
-    create_table :topics do |table|
-      table.column :id, :integer
-      table.column :created_at, :datetime, :null => false, :default => Time.now
-      table.column :author, :string
-      table.column :description, :string
-    end
-  end
-
-  catches_exception do
-    create_table :votes do |t|
-      t.column :topic_id, :integer
-      t.column :whom, :string
-    end
-  end
-
-  catches_exception do
-    create_table :tutorials do |table|
-      table.column :id, :integer
-      table.column :created_at, :datetime, :null => false, :default => Time.now
-      table.column :author, :string
-      table.column :description, :string
-    end
-  end
-end
+DatabaseHelper.connect
+DatabaseHelper.migrate!
 
 Cinch::Bot.new do
   configure do |c|
@@ -103,7 +60,6 @@ Cinch::Bot.new do
     topic = Topic.find(id)
     if topic && (topic.author == m.user.nick || m.user.nick == "dpg")
       votes = [Vote.find_by_topic_id(id)].flatten
-      puts "destroying #{votes.size} votes"
       votes.each(&:destroy)
 
       topic.destroy
