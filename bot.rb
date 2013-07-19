@@ -34,7 +34,7 @@ Cinch::Bot.new do
     m.reply "Yes. I believe so, #{m.user.name}. I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines."
   end
 
-  on(:message, /^\!idea (.+)$/) do |m, message|
+  on(:message, /^!idea (.+)$/) do |m, message|
     unless Topic.create(:description => message, :author => m.user.nick)
       m.reply "Techendo is broken. Alert the authorities"
     else
@@ -42,7 +42,7 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^\!ideas( --spam)?$/) do |m, spam_channel|
+  on(:message, /^!ideas( --spam)?$/) do |m, spam_channel|
     user = User(m.user.nick)
     ideas = Idea.find(:all)
     ideas.each do |t|
@@ -63,7 +63,7 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^\!topics( --spam)?$/) do |m, spam_channel|
+  on(:message, /^!topics( --spam)?$/) do |m, spam_channel|
     user = User(m.user.nick)
 
     topics = Topic.find(:all)
