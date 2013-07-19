@@ -31,6 +31,14 @@ module DatabaseHelper
       end
 
       catches_exception do
+        create_table :ideas do |table|
+          table.column :id, :integer
+          table.column :created_at, :datetime, :nill => false, :default => Time.now
+          table.column :description, :string
+        end
+      end
+
+      catches_exception do
         create_table :votes do |t|
           t.column :topic_id, :integer
           t.column :whom, :string

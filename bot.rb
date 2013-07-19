@@ -17,6 +17,7 @@ Cinch::Bot.new do
     c.nick = 'techendo-pal'
   end
 
+
   on(:message, '!help') do |m|
     m.user.send 'Hello, I am the techendo bot. You can interact with me via these commands:'
     m.user.send '!topic (description of topic) : suggest a potential topic for techendo'
@@ -33,6 +34,27 @@ Cinch::Bot.new do
     m.reply "Yes. I believe so, #{m.user.name}. I visualize a time when we will be to robots what dogs are to humans, and I'm rooting for the machines."
   end
 
+  on(:message, /^\!idea (.+)$/) do |m, message|
+    unless Topic.create(:description => message, :author => m.user.nick)
+      m.reply "Techendo is broken. Alert the authorities"
+    else
+      m.reply "Recorded techendo idea: #{message}, by author: #{m.user.nick} at #{Time.now}"
+    end
+  end
+
+  on(:message, /^\!ideas( --spam)?$/) do |m, spam_channel|
+    user = User(m.user.nick)
+    ideas = Idea.find(:all)
+    ideas.each do |t|
+      message = "#{t.id} : #{t.description} (submitted by #{t.author})"
+      if spam_channel
+        m.reply message
+      else
+        user.send message
+      end
+    end
+  end 
+
   on(:message, /^!topic (.+)$/) do |m, message|
     unless Topic.create(:description => message, :author => m.user.nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
@@ -47,7 +69,6 @@ Cinch::Bot.new do
     topics = Topic.find(:all)
     topics.each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"
-
       if spam_channel
         m.reply message
       else
