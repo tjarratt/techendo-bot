@@ -35,7 +35,7 @@ Cinch::Bot.new do
   end
 
   on(:message, /^!idea (.+)$/) do |m, message|
-    unless Topic.create(:description => message, :author => m.user.nick)
+    unless Idea.create(:description => message, :author => m.user.nick)
       m.reply "Techendo is broken. Alert the authorities"
     else
       m.reply "Recorded techendo idea: #{message}, by author: #{m.user.nick} at #{Time.now}"
