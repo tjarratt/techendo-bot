@@ -7,17 +7,15 @@ require './vote'
 require './tutorial'
 require './database'
 
+DatabaseHelper.connect
+DatabaseHelper.migrate!
+
 Cinch::Bot.new do
   configure do |c|
     c.server = 'irc.freenode.org'
     c.channels = ['#techendo']
     c.nick = 'techendo-pal'
   end
-
-  DatabaseHelper.connect
-  DatabaseHelper.migrate!
-
-
 
   on(:message, '!help') do |m|
     m.user.send 'Hello, I am the techendo bot. You can interact with me via these commands:'
