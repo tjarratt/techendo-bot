@@ -34,6 +34,7 @@ module DatabaseHelper
         create_table :ideas do |table|
           table.column :id, :integer
           table.column :created_at, :datetime, :nill => false, :default => Time.now
+          table.column :author, :string
           table.column :description, :string
         end
       end
