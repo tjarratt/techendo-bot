@@ -8,31 +8,43 @@ require './tutorial'
 require './idea'
 require './database'
 require './links'
+require './actions/help_action'
 
 DatabaseHelper.connect
 DatabaseHelper.migrate!
 
+actions = [HelpAction]
+
 Cinch::Bot.new do
+  @last_failure = nil
+  @last_exception = nil
+
   configure do |c|
     c.server = 'irc.freenode.org'
-    c.channels = ['#techendo']
+    c.channels = ['#timecube']
     c.nick = 'techendo-pal'
   end
 
-  on(:message, '!help') do |m|
-    m.user.send 'Hello, I am the techendo bot. You can interact with me via these commands:'
-    m.user.send '!topic (description of topic) : suggest a potential topic for techendo'
-    m.user.send '!topics (--spam) : I will whisper the list of topics to you. Use --spam to spam the channel instead'
-    m.user.send '!delete (topic_id) : delete a topic'
-    m.user.send '!tutorial (description of tutorial) : suggest a potential tutorial for techendo'
-    m.user.send '!tutorials (--spam) : I will whisper the list of tutorials to you. Use --spam to spam the channel instead'
-    m.user.send '!delete tutorial (id) : delete a tutorial'
-    m.user.send '!vote (topic_id) : vote on a topic'
-    m.user.send '!votes (--spam) : I will whisper the list of votes to you. Use --spam to spam the channel instead'
-    m.user.send '!link (URL) : Logs the URL for the show'
-    m.user.send '!links : Messages you with the last 20 links submitted'
-    m.user.send '!mylinks : Messages you the last 10 links YOU submitted'
-    m.user.send '!links (nick) : Messages you with the last 10 links submitted by the nick provided'
+  actions.each do |a|
+    on(*a.args) do |args|
+      if failure = a.action.call(*args)
+        @last_exception = failure
+        @last_failure = a.args.join(', ')
+      end
+    end
+  end
+
+  on(:message, '!errors') do |m|
+    unless @last_failure.nil?
+      user = User(m.user.nick)
+      user.send "Last failure was #{@last_failure}. Result : #{@last_exception.message}"
+      user.send @last_exception.backtrace
+
+      @last_failure = nil
+      @last_exception = nil
+    else
+      m.reply "All systems operational"
+    end
   end
 
   on(:message, 'you there, techendo-pal?') do |m|
