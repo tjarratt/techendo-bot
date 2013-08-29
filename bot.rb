@@ -21,7 +21,7 @@ Cinch::Bot.new do
 
   configure do |c|
     c.server = 'irc.freenode.org'
-    c.channels = ['#timecube']
+    c.channels = ['#techendo']
     c.nick = 'techendo-pal'
   end
 
