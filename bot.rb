@@ -70,7 +70,7 @@ Cinch::Bot.new do
         user.send message
       end
     end
-  end 
+  end
 
   on(:message, /^!topic (.+)$/) do |m, message|
     unless Topic.create(:description => message, :author => m.user.nick)
@@ -223,9 +223,7 @@ Cinch::Bot.new do
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
           user.send message
       end #links printing
-      
     end #end sorting print command
-
   end #end printing do
 
   on(:message, /^!links( .+)?$/) do |m, nick_name|
@@ -245,5 +243,4 @@ Cinch::Bot.new do
       user.send message
       end #links printing
   end #end showing links
-
 end.start
