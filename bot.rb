@@ -217,7 +217,7 @@ Cinch::Bot.new do
       links = Link.where(showlink: true, author: m.user.nick).last(10)
       links.each do |link|
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
-          user.send message
+        user.send message
         #end spam if else
       end #links printing
 
@@ -226,7 +226,7 @@ Cinch::Bot.new do
       links = Link.last(30)
       links.each do |link|
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
-          user.send message
+        user.send message
       end #links printing
     end #end sorting print command
   end #end printing do
@@ -242,10 +242,9 @@ Cinch::Bot.new do
       #messages you the past 20 links submitted. Probably is going to trigger flood protection.
       links = Link.where(showlink: true).last(20)
     end
-
-      links.each do |link|
+    links.each do |link|
       message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
       user.send message
-      end #links printing
+    end #links printing
   end #end showing links
 end.start
