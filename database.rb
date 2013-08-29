@@ -31,6 +31,18 @@ module DatabaseHelper
       end
 
       catches_exception do
+        create_table :links do |table|
+          table.column :id, :integer
+          table.column :created_at, :datetime, :null => false, :default => Time.now
+          table.column :author, :string
+          table.column :url, :string
+          table.column :showlink, :boolean
+          table.column :description, :string
+          table.column :authname, :string
+        end
+      end
+
+      catches_exception do
         create_table :ideas do |table|
           table.column :id, :integer
           table.column :created_at, :datetime, :nill => false, :default => Time.now
