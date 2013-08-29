@@ -176,7 +176,8 @@ Cinch::Bot.new do
   end
 
   #munching on URLs Prism style - fails for URLs with parameters
-  on(:catchall, /https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/) do |m|
+  on(:catchall, /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+  ) do |m|
     #checks for !link command and skips if present
     if m.message.match(/^!link/)
     else
