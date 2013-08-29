@@ -196,7 +196,7 @@ Cinch::Bot.new do
     user = User(m.user.nick)
 
     #messages you the past 20 links you submitted
-    elsif m.message.match(/^!mylinks$/)
+    if m.message.match(/^!mylinks$/)
       links = Link.where(showlink: true, author: m.user.nick).last(10)
       links.each do |link|
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
@@ -205,7 +205,7 @@ Cinch::Bot.new do
       end #links printing
 
     #messages you the past 30 links logged and submitted
-    elsif m.message.match(/^!prismlinks$/)
+    else m.message.match(/^!prismlinks$/)
       links = Link.last(30)
       links.each do |link|
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
