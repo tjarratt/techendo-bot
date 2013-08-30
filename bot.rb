@@ -28,44 +28,6 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^!vote (\d+)$/) do |m, id|
-    topic = Topic.find(id)
-    unless topic
-      return m.reply("sorry, I can't find that topic (#{id}), #{m.user.nick}")
-    end
-
-    votes = [Vote.find_by_topic_id(id) || []].flatten
-    if votes.empty? || !votes.map(&:whom).include?(m.user.nick)
-      Vote.create(
-        :topic_id => id,
-        :whom => m.user.nick
-      )
-      m.reply "#{m.user.nick} voted for topic #{id}"
-    else
-      m.reply "#{m.user.nick} already voted for topic #{id}"
-    end
-  end
-
-  on(:message, /^!votes( --spam)?$/) do |m, should_spam|
-    user = User(m.user.nick)
-
-    all_votes = Vote.find(:all).to_a.inject({}) do |acc, v|
-      acc[v.topic_id] ||= 0
-      acc[v.topic_id] += 1
-      acc
-    end
-
-    all_votes.sort_by {|k, v| v }.reverse.each do |topic, votes|
-      message = "Topic (#{topic}) has #{votes} votes"
-
-      if should_spam
-        m.reply message
-      else
-        user.send message
-      end
-    end
-  end
-
   #munching on URLs Prism style - fails for URLs with parameters
   on(:catchall, /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
   ) do |m|
