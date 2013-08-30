@@ -28,34 +28,6 @@ Cinch::Bot.new do
     end
   end
 
-  on(:message, /^!tutorial (.+)$/) do |m, message|
-    unless Tutorial.create(:description => message, :author => m.user.nick)
-      m.reply "Sorry, that didn't work. There must be something wrong with me today."
-    else
-      m.reply "Recorded tutorial: #{message}, by author: #{m.user.nick} at #{Time.now}"
-    end
-  end
-
-  on(:message, /^\!tutorials( --spam)?$/) do |m, spam_channel|
-    Tutorial.find(:all).each do |t|
-      message = "#{t.id} : #{t.description} (submitted by #{t.author})"
-
-      if spam_channel
-        m.reply message
-      else
-        m.user.send message
-      end
-    end
-  end
-
-  on(:message, /^!delete tutorial (\d+)$/) do |m, id|
-    tut = Tutorial.find(id)
-    if tut.author == m.user.nick || m.user.nick == "dpg"
-      Tutorial.destroy(id)
-      m.reply "Successfully destroyed tutorial: #{tut.id}, by #{tut.author}"
-    end
-  end
-
   on(:message, /^!vote (\d+)$/) do |m, id|
     topic = Topic.find(id)
     unless topic
