@@ -14,9 +14,6 @@ DatabaseHelper.connect
 DatabaseHelper.migrate!
 
 Cinch::Bot.new do
-  @last_failure = nil
-  @last_exception = nil
-
   configure do |c|
     c.server = 'irc.freenode.org'
     c.channels = ['#techendo']
@@ -26,24 +23,10 @@ Cinch::Bot.new do
   SafeAction.subclasses.each do |a|
     on(*a.args) do |args|
       if failure = a.action.call(*args)
-        @last_exception = failure
-        @last_failure = a.args.join(', ')
+        ErrorsAction.record_error(a.args.join(', '), failure)
       end
     end
-  end
-
-  on(:message, '!errors') do |m|
-    unless @last_failure.nil?
-      user = User(m.user.nick)
-      user.send "Last failure was #{@last_failure}. Result : #{@last_exception.message}"
-      user.send @last_exception.backtrace
-
-      @last_failure = nil
-      @last_exception = nil
-    else
-      m.reply "All systems operational"
-    end
-  end
+  endo
 
   on(:message, /techendo\-pal/) do |m|
     m.reply "I know you're not talking about me"
