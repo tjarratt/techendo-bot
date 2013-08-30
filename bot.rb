@@ -8,7 +8,7 @@ require './tutorial'
 require './idea'
 require './database'
 require './links'
-require './actions/help_action'
+require './actions'
 
 DatabaseHelper.connect
 DatabaseHelper.migrate!
