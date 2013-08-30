@@ -13,8 +13,6 @@ require './actions'
 DatabaseHelper.connect
 DatabaseHelper.migrate!
 
-actions = [HelpAction]
-
 Cinch::Bot.new do
   @last_failure = nil
   @last_exception = nil
@@ -25,7 +23,7 @@ Cinch::Bot.new do
     c.nick = 'techendo-pal'
   end
 
-  actions.each do |a|
+  SafeAction.subclasses.each do |a|
     on(*a.args) do |args|
       if failure = a.action.call(*args)
         @last_exception = failure

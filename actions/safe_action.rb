@@ -18,4 +18,13 @@ class SafeAction
   # this method should be implemented by subclasses
   def self._action
   end
+
+  def self.inherited(whom)
+    @subclasses ||= []
+    @subclasses << whom
+  end
+
+  def self.subclasses
+    @subclasses
+  end
 end
