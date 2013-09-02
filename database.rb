@@ -69,3 +69,8 @@ module DatabaseHelper
     end
   end
 end
+
+Dir.glob(File.dirname(__FILE__) + '/models/*.rb').each do |file|
+  filename = File.basename(file).sub('.rb', '')
+  require "./models/#{filename}"
+end

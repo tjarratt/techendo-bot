@@ -2,12 +2,7 @@
 require 'uri'
 require 'cinch'
 require 'active_record'
-require './topic'
-require './vote'
-require './tutorial'
-require './idea'
 require './database'
-require './links'
 require './actions'
 
 DatabaseHelper.connect
