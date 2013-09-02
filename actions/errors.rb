@@ -8,8 +8,9 @@ class ErrorsAction < SafeAction
     [:message, '!errors']
   end
 
-  def self.record_error(args)
-    @last_failure, @last_exception = args
+  def self.record_error(message, backtrace)
+    @last_failure = message
+    @last_exception = backtrace
   end
 
   def self._action(m)
