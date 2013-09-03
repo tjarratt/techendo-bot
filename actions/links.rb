@@ -55,14 +55,12 @@ class LinkPrintAction < BaseAction
   end
 
   def self._action(m)
-    user = User(m.user.nick)
-
     #messages you the past 20 links you submitted
     if m.message.match(/^!mylinks$/)
       links = Link.where(showlink: true, author: m.user.nick).last(10)
       links.each do |link|
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
-        user.send message
+        m.user.send message
         #end spam if else
       end #links printing
 
@@ -71,7 +69,7 @@ class LinkPrintAction < BaseAction
       links = Link.last(30)
       links.each do |link|
         message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
-        user.send message
+        m.user.send message
       end
     end
   end
@@ -87,8 +85,6 @@ class PrintUsersLinksAction < BaseAction
   end
 
   def self._action(m, nick_name)
-    user = User(m.user.nick)
-
     if nick_name
       #messages you the past 10 links submitted
       nick_name = nick_name.strip
@@ -99,7 +95,7 @@ class PrintUsersLinksAction < BaseAction
     end
     links.each do |link|
       message = "#{link.url} : #{link.created_at} (submitted by #{link.author})"
-      user.send message
+      m.user.send message
     end
   end
 end

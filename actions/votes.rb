@@ -38,8 +38,6 @@ class VoteListAction < BaseAction
   end
 
   def self._action(m, should_spam)
-    user = User(m.user.nick)
-
     all_votes = Vote.find(:all).to_a.inject({}) do |acc, v|
       acc[v.topic_id] ||= 0
       acc[v.topic_id] += 1
@@ -52,7 +50,7 @@ class VoteListAction < BaseAction
       if should_spam
         m.reply message
       else
-        user.send message
+        m.user.send message
       end
     end
   end

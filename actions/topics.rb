@@ -28,15 +28,13 @@ class TopicListAction < BaseAction
   end
 
   def self._action(m, spam_channel)
-    user = User(m.user.nick)
-
     topics = Topic.find(:all)
     topics.each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"
       if spam_channel
         m.reply message
       else
-        user.send message
+        m.user.send message
       end
     end
   end
