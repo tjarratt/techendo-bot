@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class CatchAllLinksAction < SafeAction
+class CatchAllLinksAction < BaseAction
   def self.args
     [:catchall, /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/]
   end
@@ -22,7 +22,7 @@ class CatchAllLinksAction < SafeAction
   end
 end
 
-class LinkCreateAction < SafeAction
+class LinkCreateAction < BaseAction
   def self.args
     [:message, /^!link (.+)$/]
   end
@@ -41,7 +41,7 @@ class LinkCreateAction < SafeAction
   end
 end
 
-class LinkPrintAction < SafeAction
+class LinkPrintAction < BaseAction
   def self.args
     [:message, /^!(mylinks|prismlinks)$/]
   end
@@ -69,7 +69,7 @@ class LinkPrintAction < SafeAction
   end
 end
 
-class PrintUsersLinksAction < SafeAction
+class PrintUsersLinksAction < BaseAction
   def self.args
     [:message, /^!links( .+)?$/]
   end

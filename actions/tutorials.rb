@@ -1,4 +1,6 @@
-class TutorialCreateAction < SafeAction
+require_relative './base'
+
+class TutorialCreateAction < BaseAction
   def self.args
     [:message, /^!tutorial (.+)$/]
   end
@@ -12,7 +14,7 @@ class TutorialCreateAction < SafeAction
   end
 end
 
-class TutorialListAction < SafeAction
+class TutorialListAction < BaseAction
   def self.args
     [:message, /^\!tutorials( --spam)?$/]
   end
@@ -30,7 +32,7 @@ class TutorialListAction < SafeAction
   end
 end
 
-class TutorialDeleteAction < SafeAction
+class TutorialDeleteAction < BaseAction
   def self.args
     [:message, /^!delete tutorial (\d+)$/]
   end

@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class VoteAction < SafeAction
+class VoteAction < BaseAction
   def self.args
     [:message, /^!vote (\d+)$/]
   end
@@ -24,7 +24,7 @@ class VoteAction < SafeAction
   end
 end
 
-class VoteListAction < SafeAction
+class VoteListAction < BaseAction
   def self.args
     [:message, /^!votes( --spam)?$/]
   end

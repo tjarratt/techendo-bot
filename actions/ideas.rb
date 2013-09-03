@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class IdeaCreateAction < SafeAction
+class IdeaCreateAction < BaseAction
   def self.args
     [:message, /^!idea (.+)$/]
   end
@@ -14,7 +14,7 @@ class IdeaCreateAction < SafeAction
   end
 end
 
-class IdeaListAction < SafeAction
+class IdeaListAction < BaseAction
   def self.args
     [:message, /^!ideas( --spam)?$/]
   end

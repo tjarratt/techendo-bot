@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class ErrorsAction < SafeAction
+class ErrorsAction < BaseAction
   @last_failure = nil
   @last_exception = nil
 

@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class HelpAction < SafeAction
+class HelpAction < BaseAction
   def self.args
     [:message, '!help']
   end

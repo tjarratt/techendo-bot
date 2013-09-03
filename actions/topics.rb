@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class TopicCreateAction < SafeAction
+class TopicCreateAction < BaseAction
   def self.args
     [:message, /^!topic (.+)$/]
   end
@@ -14,7 +14,7 @@ class TopicCreateAction < SafeAction
   end
 end
 
-class TopicListAction < SafeAction
+class TopicListAction < BaseAction
   def self.args
     [:message, /^!topics( --spam)?$/]
   end
@@ -35,7 +35,7 @@ class TopicListAction < SafeAction
 end
 
 
-class TopicDeleteAction < SafeAction
+class TopicDeleteAction < BaseAction
   def self.args
     [:message, /^!delete topic (\d+)$/]
   end

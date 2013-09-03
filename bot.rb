@@ -15,7 +15,7 @@ Cinch::Bot.new do
     c.nick = 'techendo-pal'
   end
 
-  SafeAction.subclasses.each do |a|
+  BaseAction.subclasses.each do |a|
     on(*a.args) do |args|
       if failure = a.action.call(*args)
         ErrorsAction.record_error(a.args.join(', '), failure)

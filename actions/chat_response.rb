@@ -1,6 +1,6 @@
-require_relative './safe_action'
+require_relative './base'
 
-class ChatResponseAction < SafeAction
+class ChatResponseAction < BaseAction
   def self.args
     [:message, /techendo\-pal/]
   end
