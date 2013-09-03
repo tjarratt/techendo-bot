@@ -38,7 +38,8 @@ class LinkCreateAction < BaseAction
           :author => m.user.nick,
           :showlink => true
         )
-      m.reply "Logged #{url} from #{m.user.nick}. Spanx!"
+      m.reply "You should totally repost this to the facebook page #{m.user.nick}! Logged anyways."
+      # Logged #{url} from #{m.user.nick}. Spanx!"
     else
       m.reply "Yo link don't jive with my insides."
     end
