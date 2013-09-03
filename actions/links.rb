@@ -8,17 +8,15 @@ class CatchAllLinksAction < BaseAction
   def self._action(*args)
     #checks for !link command and skips if present
     m = args.first
+    puts m.to_yaml
+    raise m.to_yaml
     if m.message.match(/^!link/)
-    else
-      links = URI.extract(m.message)
-      links.each { |link|
-        Link.create(
-            :url => link,
-            :author => m.user.nick,
-            :showlink => false
-          )
+      Link.create(
+        :url => url,
+        :author => m.user.nick,
+        :showlink => false
+      )
       m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
-      }
     end
   end
 end
