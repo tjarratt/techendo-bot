@@ -16,7 +16,7 @@ class CatchAllLinksAction < BaseAction
             :author => m.user.nick,
             :showlink => false
           )
-      log "We added #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
+      log "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
       }
     end
   end
@@ -38,8 +38,7 @@ class LinkCreateAction < BaseAction
           :author => m.user.nick,
           :showlink => true
         )
-      m.reply "You should totally repost this to the facebook page #{m.user.nick}! Logged anyways."
-      # Logged #{url} from #{m.user.nick}. Spanx!"
+      m.reply "Logged #{url} from #{m.user.nick}. Spanx!"
     else
       m.reply "Yo link don't jive with my insides."
     end
