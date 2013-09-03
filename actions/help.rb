@@ -1,6 +1,10 @@
 require_relative './base'
 
 class HelpAction < BaseAction
+  def self.help_description
+    '!help : prints the commands this bot will respond to'
+  end
+
   def self.args
     [:message, '!help']
   end
@@ -10,7 +14,7 @@ class HelpAction < BaseAction
 
     BaseAction.subclasses.each do |klass|
       message = klass.help_description
-      m.user.send message unless str.empty?
+      m.user.send message unless message.nil? || message.empty?
     end
   end
 end

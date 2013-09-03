@@ -4,6 +4,10 @@ class ErrorsAction < BaseAction
   @last_failure = nil
   @last_exception = nil
 
+  def self.help_description
+    '!errors : Will print the last error, with backtrace'
+  end
+
   def self.args
     [:message, '!errors']
   end
@@ -15,9 +19,8 @@ class ErrorsAction < BaseAction
 
   def self._action(m)
     unless @last_failure.nil?
-      user = User(m.user.nick)
-      user.send "Last failure was #{@last_failure}. Result : #{@last_exception.message}"
-      user.send @last_exception.backtrace
+      m.user.send "Last failure was #{@last_failure}. Result : #{@last_exception.message}"
+      m.user.send @last_exception.backtrace
 
       @last_failure = nil
       @last_exception = nil

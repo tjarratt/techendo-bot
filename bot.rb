@@ -16,7 +16,7 @@ Cinch::Bot.new do
   end
 
   BaseAction.subclasses.each do |a|
-    on(*a.args) do |args|
+    on(*a.args) do |*args|
       if failure = a.action.call(*args)
         ErrorsAction.record_error(a.args.join(', '), failure)
       end

@@ -1,6 +1,6 @@
 class BaseAction
   def self.action
-    the_action = proc do |args|
+    the_action = proc do |*args|
       return_value = false
 
       begin
