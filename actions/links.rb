@@ -23,6 +23,10 @@ class CatchAllLinksAction < BaseAction
 end
 
 class LinkCreateAction < BaseAction
+  def self.help_description
+    '!link (URL) : Logs the URL for the show'
+  end
+
   def self.args
     [:message, /^!link (.+)$/]
   end
@@ -42,6 +46,10 @@ class LinkCreateAction < BaseAction
 end
 
 class LinkPrintAction < BaseAction
+  def self.help_description
+    '!links : Messages you with the last 20 links submitted'
+  end
+
   def self.args
     [:message, /^!(mylinks|prismlinks)$/]
   end
@@ -70,6 +78,10 @@ class LinkPrintAction < BaseAction
 end
 
 class PrintUsersLinksAction < BaseAction
+  def self.help_description
+    '!links (nick) : Messages you with the last 10 links submitted by the nick provided'
+  end
+
   def self.args
     [:message, /^!links( .+)?$/]
   end

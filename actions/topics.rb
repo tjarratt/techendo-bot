@@ -1,6 +1,10 @@
 require_relative './base'
 
 class TopicCreateAction < BaseAction
+  def self.help_description
+    '!topic (description of topic) : suggest a potential topic for techendo'
+  end
+
   def self.args
     [:message, /^!topic (.+)$/]
   end
@@ -15,6 +19,10 @@ class TopicCreateAction < BaseAction
 end
 
 class TopicListAction < BaseAction
+  def self.help_description
+    '!topics (--spam) : I will whisper the list of topics to you. Use --spam to spam the channel instead'
+  end
+
   def self.args
     [:message, /^!topics( --spam)?$/]
   end
@@ -36,6 +44,10 @@ end
 
 
 class TopicDeleteAction < BaseAction
+  def self.help_description
+    '!delete (topic_id) : delete a topic'
+  end
+
   def self.args
     [:message, /^!delete topic (\d+)$/]
   end

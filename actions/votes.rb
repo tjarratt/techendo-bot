@@ -1,6 +1,10 @@
 require_relative './base'
 
 class VoteAction < BaseAction
+  def self.help_description
+    '!vote (topic_id) : vote on a topic'
+  end
+
   def self.args
     [:message, /^!vote (\d+)$/]
   end
@@ -25,6 +29,10 @@ class VoteAction < BaseAction
 end
 
 class VoteListAction < BaseAction
+  def self.help_description
+    '!votes (--spam) : I will whisper the list of votes to you. Use --spam to spam the channel instead'
+  end
+
   def self.args
     [:message, /^!votes( --spam)?$/]
   end

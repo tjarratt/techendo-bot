@@ -15,9 +15,9 @@ class BaseAction
     return the_action
   end
 
-  # this method should be implemented by subclasses
-  def self._action
-  end
+  # these methods should be implemented by subclasses
+  def self._action; end
+  def self.help_description; end
 
   def self.inherited(whom)
     @subclasses ||= []

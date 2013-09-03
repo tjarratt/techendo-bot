@@ -1,6 +1,10 @@
 require_relative './base'
 
 class TutorialCreateAction < BaseAction
+  def self.help_description
+    '!tutorial (description of tutorial) : suggest a potential tutorial for techendo'
+  end
+
   def self.args
     [:message, /^!tutorial (.+)$/]
   end
@@ -15,6 +19,10 @@ class TutorialCreateAction < BaseAction
 end
 
 class TutorialListAction < BaseAction
+  def self.help_description
+    '!tutorials (--spam) : I will whisper the list of tutorials to you. Use --spam to spam the channel instead'
+  end
+
   def self.args
     [:message, /^\!tutorials( --spam)?$/]
   end
@@ -33,6 +41,10 @@ class TutorialListAction < BaseAction
 end
 
 class TutorialDeleteAction < BaseAction
+  def self.help_description
+    '!delete tutorial (id) : delete a tutorial'
+  end
+
   def self.args
     [:message, /^!delete tutorial (\d+)$/]
   end
