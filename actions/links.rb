@@ -54,7 +54,7 @@ class LinkPrintAction < BaseAction
     [:message, /^!(mylinks|prismlinks)$/]
   end
 
-  def self._action(m)
+  def self._action(m, capture)
     #messages you the past 20 links you submitted
     if m.message.match(/^!mylinks$/)
       links = Link.where(showlink: true, author: m.user.nick).last(10)
