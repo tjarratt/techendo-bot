@@ -5,8 +5,9 @@ class CatchAllLinksAction < BaseAction
     [:catchall, /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/]
   end
 
-  def self._action(m)
+  def self._action(*args)
     #checks for !link command and skips if present
+    m = args.first
     if m.message.match(/^!link/)
     else
       links = URI.extract(m.message)
@@ -16,7 +17,7 @@ class CatchAllLinksAction < BaseAction
             :author => m.user.nick,
             :showlink => false
           )
-      log "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
+      m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
       }
     end
   end
