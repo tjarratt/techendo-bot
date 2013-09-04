@@ -8,8 +8,6 @@ class CatchAllLinksAction < BaseAction
   def self._action(*args)
     #checks for !link command and skips if present
     m = args.first
-    puts m.to_yaml
-    raise m.to_yaml
     if m.message.match(/^!link/)
       Link.create(
         :url => url,
