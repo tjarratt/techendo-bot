@@ -6,15 +6,17 @@ class CatchAllLinksAction < BaseAction
   end
 
   def self._action(*args)
+    m  = args.first
     #checks for !link command and skips if present
-    m = args.first
     if m.message.match(/^!link/)
-      Link.create(
+      successfully_created = Link.create(
         :url => url,
         :author => m.user.nick,
         :showlink => false
       )
-      m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
+      if successfully_created
+        m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
+      end
     end
   end
 end
@@ -29,13 +31,15 @@ class LinkCreateAction < BaseAction
   end
 
   def self._action(m, url)
-    if (/^https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.match url)
-      Link.create(
-          :url => url,
-          :author => m.user.nick,
-          :showlink => true
-        )
-      m.reply "Logged #{url} from #{m.user.nick}. Spanx!"
+    if url.match(/^https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)
+      successfully_created = Link.create(
+        :url => url,
+        :author => m.user.nick,
+        :showlink => true
+      )
+      if successfully_created
+        m.reply "Logged #{url} from #{m.user.nick}. Spanx!"
+      end
     else
       m.reply "Yo link don't jive with my insides."
     end
