@@ -5,7 +5,7 @@ class IdeaCreateAction < BaseAction
     [:message, /^!idea (.+)$/]
   end
 
-  def self._action(m, message)
+  def self.action(m, message)
     unless Idea.create(:description => message, :author => m.user.nick)
       m.reply "Techendo is broken. Alert the authorities!"
     else
@@ -19,7 +19,7 @@ class IdeaListAction < BaseAction
     [:message, /^!ideas( --spam)?$/]
   end
 
-  def self._action(m, spam_channel)
+  def self.action(m, spam_channel)
     ideas = Idea.find(:all)
     ideas.each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"

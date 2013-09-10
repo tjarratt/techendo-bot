@@ -17,7 +17,7 @@ class ErrorsAction < BaseAction
     @last_exception = backtrace
   end
 
-  def self._action(m)
+  def self.action(m)
     unless @last_failure.nil?
       m.user.send "Last failure was #{@last_failure}. Result : #{@last_exception.message}"
       m.user.send @last_exception.backtrace

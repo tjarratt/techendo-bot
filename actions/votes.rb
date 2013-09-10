@@ -9,7 +9,7 @@ class VoteAction < BaseAction
     [:message, /^!vote (\d+)$/]
   end
 
-  def self._action(m, id)
+  def self.action(m, id)
     topic = Topic.find(id)
     unless topic
       return m.reply("sorry, I can't find that topic (#{id}), #{m.user.nick}")
@@ -37,7 +37,7 @@ class VoteListAction < BaseAction
     [:message, /^!votes( --spam)?$/]
   end
 
-  def self._action(m, should_spam)
+  def self.action(m, should_spam)
     all_votes = Vote.find(:all).to_a.inject({}) do |acc, v|
       acc[v.topic_id] ||= 0
       acc[v.topic_id] += 1

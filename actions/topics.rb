@@ -9,7 +9,7 @@ class TopicCreateAction < BaseAction
     [:message, /^!topic (.+)$/]
   end
 
-  def self._action(m, message)
+  def self.action(m, message)
     unless Topic.create(:description => message, :author => m.user.nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
     else
@@ -27,7 +27,7 @@ class TopicListAction < BaseAction
     [:message, /^!topics( --spam)?$/]
   end
 
-  def self._action(m, spam_channel)
+  def self.action(m, spam_channel)
     topics = Topic.find(:all)
     topics.each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"
@@ -50,7 +50,7 @@ class TopicDeleteAction < BaseAction
     [:message, /^!delete topic (\d+)$/]
   end
 
-  def self._action(m, id)
+  def self.action(m, id)
     topic = Topic.find(id)
     if topic && (topic.author == m.user.nick || m.user.nick == "dpg")
       votes = [Vote.find_by_topic_id(id)].flatten

@@ -17,8 +17,11 @@ Cinch::Bot.new do
 
   BaseAction.subclasses.each do |a|
     on(*a.args) do |*args|
-      if failure = a.action(*args)
-        ErrorsAction.record_error(a.args.join(', '), failure)
+      begin
+        the_action = a.action(*args)
+        self.instance_eval &the_action if the_action.is_a? Proc
+      rescue Exception => exception
+        ErrorsAction.record_error(a.args.join(', '), exception)
       end
     end
   end

@@ -9,7 +9,7 @@ class TutorialCreateAction < BaseAction
     [:message, /^!tutorial (.+)$/]
   end
 
-  def self._action(m, message)
+  def self.action(m, message)
     unless Tutorial.create(:description => message, :author => m.user.nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
     else
@@ -27,7 +27,7 @@ class TutorialListAction < BaseAction
     [:message, /^\!tutorials( --spam)?$/]
   end
 
-  def self._action(m, spam_channel)
+  def self.action(m, spam_channel)
     Tutorial.find(:all).each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"
 
@@ -49,7 +49,7 @@ class TutorialDeleteAction < BaseAction
     [:message, /^!delete tutorial (\d+)$/]
   end
 
-  def self._action(m, id)
+  def self.action(m, id)
     tut = Tutorial.find(id)
     if tut.author == m.user.nick || m.user.nick == "dpg"
       Tutorial.destroy(id)

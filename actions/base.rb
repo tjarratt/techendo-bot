@@ -1,18 +1,10 @@
 class BaseAction
-  def self.action(*args)
-    begin
-      _action(*args)
-    rescue Exception => e
-      return e
-    end
-
-    return false
-  end
-
   # these methods should be implemented by subclasses
-  def self._action; end
+  def self.action; end
   def self.help_description; end
 
+  # used to reference all of the subclasses quickly
+  # one of the many benefits of a dynamic language like ruby
   def self.inherited(whom)
     @subclasses ||= []
     @subclasses << whom

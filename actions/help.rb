@@ -9,7 +9,7 @@ class HelpAction < BaseAction
     [:message, '!help']
   end
 
-  def self._action(m)
+  def self.action(m)
     m.user.send 'Hello, I am the techendo bot. You can interact with me via these commands:'
 
     BaseAction.subclasses.each do |klass|

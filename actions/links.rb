@@ -5,7 +5,7 @@ class CatchAllLinksAction < BaseAction
     [:catchall, /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/]
   end
 
-  def self._action(*args)
+  def self.action(*args)
     m  = args.first
     #checks for !link command and skips if present
     if m.message.match(/^!link/)
@@ -30,7 +30,7 @@ class LinkCreateAction < BaseAction
     [:message, /^!link (.+)$/]
   end
 
-  def self._action(m, url)
+  def self.action(m, url)
     if url.match(/^https?:\/\/([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/)
       successfully_created = Link.create(
         :url => url,
@@ -55,7 +55,7 @@ class LinkPrintAction < BaseAction
     [:message, /^!(mylinks|prismlinks)$/]
   end
 
-  def self._action(m, capture)
+  def self.action(m, capture)
     #messages you the past 20 links you submitted
     if m.message.match(/^!mylinks$/)
       links = Link.where(showlink: true, author: m.user.nick).last(10)
@@ -85,7 +85,7 @@ class PrintUsersLinksAction < BaseAction
     [:message, /^!links( .+)?$/]
   end
 
-  def self._action(m, nick_name)
+  def self.action(m, nick_name)
     if nick_name
       #messages you the past 10 links submitted
       nick_name = nick_name.strip
