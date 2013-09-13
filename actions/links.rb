@@ -7,20 +7,16 @@ class CatchAllLinksAction < BaseAction
 
   action do |*args|
     m  = args.first
-    successfully_created = true
 
     #checks for !link command and skips if present
     if !m.message.match(/^!link/)
       links = URI.extract(m.message)
       links.each do |url|
-        successfully_created &= Link.create(
+        Link.create(
           :url => url,
           :author => m.user.nick,
           :showlink => false
         )
-      end
-      if successfully_created
-        m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{links.size} link(s) from #{m.user.nick} to our URL repo at #{Time.now}."
       end
     end
   end
