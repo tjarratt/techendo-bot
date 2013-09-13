@@ -6,6 +6,6 @@ class EchoAction < BaseAction
   end
 
   action do |m, message|
-    return proc { Channel('#techendo').send(message) }
+    proc { Channel('#techendo').send(message) }
   end
 end
