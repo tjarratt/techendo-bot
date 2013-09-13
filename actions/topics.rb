@@ -1,15 +1,15 @@
 require_relative './base'
 
 class TopicCreateAction < BaseAction
-  def self.help_description
+  help_description do
     '!topic (description of topic) : suggest a potential topic for techendo'
   end
 
-  def self.args
+  args do
     [:message, /^!topic (.+)$/]
   end
 
-  def self.action(m, message)
+  action do |m, message|
     unless Topic.create(:description => message, :author => m.user.nick)
       m.reply "Sorry, that didn't work. There must be something wrong with me today."
     else
@@ -19,15 +19,15 @@ class TopicCreateAction < BaseAction
 end
 
 class TopicListAction < BaseAction
-  def self.help_description
+  help_description do
     '!topics (--spam) : I will whisper the list of topics to you. Use --spam to spam the channel instead'
   end
 
-  def self.args
+  args do
     [:message, /^!topics( --spam)?$/]
   end
 
-  def self.action(m, spam_channel)
+  action do |m, spam_channel|
     topics = Topic.find(:all)
     topics.each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"
@@ -42,18 +42,19 @@ end
 
 
 class TopicDeleteAction < BaseAction
-  def self.help_description
-    '!delete (topic_id) : delete a topic'
+  help_description do
+    '!delete topic (id) : delete a topic'
   end
 
-  def self.args
+  args do
     [:message, /^!delete topic (\d+)$/]
   end
 
-  def self.action(m, id)
+  action do |m, id|
+    puts id.inspect
     topic = Topic.find(id)
     if topic && (topic.author == m.user.nick || m.user.nick == "dpg")
-      votes = [Vote.find_by_topic_id(id)].flatten
+      votes = [Vote.find_by_topic_id(id)].flatten.reject(&:nil?)
       votes.each(&:destroy)
 
       topic.destroy

@@ -1,15 +1,15 @@
 require_relative './base'
 
 class VoteAction < BaseAction
-  def self.help_description
+  help_description do
     '!vote (topic_id) : vote on a topic'
   end
 
-  def self.args
+  args do
     [:message, /^!vote (\d+)$/]
   end
 
-  def self.action(m, id)
+  action do |m, id|
     topic = Topic.find(id)
     unless topic
       return m.reply("sorry, I can't find that topic (#{id}), #{m.user.nick}")
@@ -29,15 +29,15 @@ class VoteAction < BaseAction
 end
 
 class VoteListAction < BaseAction
-  def self.help_description
+  help_description do
     '!votes (--spam) : I will whisper the list of votes to you. Use --spam to spam the channel instead'
   end
 
-  def self.args
+  args do
     [:message, /^!votes( --spam)?$/]
   end
 
-  def self.action(m, should_spam)
+  action do |m, should_spam|
     all_votes = Vote.find(:all).to_a.inject({}) do |acc, v|
       acc[v.topic_id] ||= 0
       acc[v.topic_id] += 1

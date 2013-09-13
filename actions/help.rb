@@ -1,15 +1,15 @@
 require_relative './base'
 
 class HelpAction < BaseAction
-  def self.help_description
+  help_description do
     '!help : prints the commands this bot will respond to'
   end
 
-  def self.args
+  args do
     [:message, '!help']
   end
 
-  def self.action(m)
+  action do |m|
     m.user.send 'Hello, I am the techendo bot. You can interact with me via these commands:'
 
     BaseAction.subclasses.each do |klass|

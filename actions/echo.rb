@@ -1,11 +1,11 @@
 require_relative './base'
 
 class EchoAction < BaseAction
-  def self.args
+  args do
     [:message, /\!echo (.+)$/]
   end
 
-  def self.action(m, message)
+  action do |m, message|
     return proc { Channel('#techendo').send(message) }
   end
 end

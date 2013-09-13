@@ -1,11 +1,11 @@
 require_relative './base'
 
 class IdeaCreateAction < BaseAction
-  def self.args
+  args do
     [:message, /^!idea (.+)$/]
   end
 
-  def self.action(m, message)
+  action do |m, message|
     unless Idea.create(:description => message, :author => m.user.nick)
       m.reply "Techendo is broken. Alert the authorities!"
     else
@@ -15,11 +15,11 @@ class IdeaCreateAction < BaseAction
 end
 
 class IdeaListAction < BaseAction
-  def self.args
+  args do
     [:message, /^!ideas( --spam)?$/]
   end
 
-  def self.action(m, spam_channel)
+  action do |m, spam_channel|
     ideas = Idea.find(:all)
     ideas.each do |t|
       message = "#{t.id} : #{t.description} (submitted by #{t.author})"
