@@ -3,5 +3,7 @@ class Link < ActiveRecord::Base
     if args[:author].match(/techendo\-pal/)
       return false
     end
+
+    super
   end
 end
