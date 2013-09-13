@@ -22,7 +22,6 @@ Cinch::Bot.new do
         self.instance_eval &the_action if the_action.instance_of? Proc
       rescue Exception => exception
         ErrorsAction.record_error(a.args.join(', '), exception)
-        raise exception #xxx
       end
     end
   end
