@@ -11,8 +11,8 @@ DatabaseHelper.migrate!
 Cinch::Bot.new do
   configure do |c|
     c.server = 'irc.freenode.org'
-    c.channels = ['#timecube']
-    c.nick = 'techendo-pal2'
+    c.channels = ['#techendo']
+    c.nick = 'techendo-pal'
   end
 
   BaseAction.subclasses.each do |a|
