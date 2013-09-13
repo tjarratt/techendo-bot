@@ -11,7 +11,8 @@ class CatchAllLinksAction < BaseAction
 
     #checks for !link command and skips if present
     if !m.message.match(/^!link/)
-      URI.extract(m.message).each do |url|
+      links = URI.extract(m.message)
+      links.each do |url|
         successfully_created &= Link.create(
           :url => url,
           :author => m.user.nick,
@@ -19,7 +20,7 @@ class CatchAllLinksAction < BaseAction
         )
       end
       if successfully_created
-        m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{link} from #{m.user.nick} to our URL repo at #{Time.now}."
+        m.reply "Do a solid and add this link to the facebook page: http://facebook/techendo. I logged #{links.size} link(s) from #{m.user.nick} to our URL repo at #{Time.now}."
       end
     end
   end
@@ -43,6 +44,8 @@ class LinkCreateAction < BaseAction
       )
       if successfully_created
         m.reply "Logged #{url} from #{m.user.nick}. Spanx!"
+      else
+        m.reply "oh no. couldn't create the link! Something's wrong!"
       end
     else
       m.reply "Yo link don't jive with my insides."
