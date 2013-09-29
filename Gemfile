@@ -5,7 +5,7 @@ gem 'activeresource'
 gem 'activerecord'
 
 group :development do
-  gem 'sqlite3'
+  gem 'rspec'
 end
 
 group :production do
